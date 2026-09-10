@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>IHGC | Image House General Contracting</title>
+  <meta
+    name="description"
+    content="IHGC — Image House General Contracting. Repair, renovate, design and create modern spaces."
+  />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* =========================================================
+       IHGC — IMAGE HOUSE GENERAL CONTRACTING
+       Single-file website
+       ========================================================= */
+
+    :root {
+      --black: #0c0c0c;
+      --dark: #121212;
+      --white: #f4f2ed;
+      --muted: #a5a29b;
+      --line: rgba(244, 242, 237, 0.14);
+      --accent: #c9a46c;
+      --max-width: 1400px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body.loading {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 80px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* =========================================================
+       PRELOADER
+       ========================================================= */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .loader-inner {
+      width: min(500px, 80%);
+      overflow: hidden;
+    }
+
+    .loader-name {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.08em;
+      line-height: 0.9;
+      transform: translateY(110%);
+    }
+
+    .loader-line {
+      height: 1px;
+      background: var(--line);
+      margin-top: 28px;
+      overflow: hidden;
+    }
+
+    .loader-progress {
+      width: 0%;
+      height: 100%;
+      background: var(--white);
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 28px 0;
+      mix-blend-mode: difference;
+    }
+
+    .nav-inner {
+      width: min(calc(100% - 80px), var(--max-width));
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: "Manrope", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .logo small {
+      display: block;
+      font-family: "DM Sans", sans-serif;
+      font-size: 7px;
+      letter-spacing: 0.2em;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links a {
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+      height: 100svh;
+      min-height: 700px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,0.15) 0%,
+          rgba(0,0,0,0.05) 40%,
+          rgba(0,0,0,0.72) 100%
+        );
+    }
+
+    .hero-image {
+      height: 115%;
+      transform: scale(1.08);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-bottom: 85px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+
+    .eyebrow span {
+      display: block;
+      transform: translateY(110%);
+    }
+
+    .hero-title {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(4.5rem, 10vw, 11rem);
+      line-height: 0.83;
+      letter-spacing: -0.09em;
+      font-weight: 800;
+      max-width: 1100px;
+      overflow: hidden;
+    }
+
+    .hero-title span {
+      display: block;
+      transform: translateY(110%);
+    }
+
+    .hero-bottom {
+      margin-top: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 950px;
+    }
+
+    .hero-description {
+      max-width: 430px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .scroll-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 55px;
+      height: 1px;
+      background: rgba(255,255,255,0.5);
+    }
+
+    /* =========================================================
+       INTRO
+       ========================================================= */
+
+    .intro {
+      min-height: 100vh;
+      padding: 180px 0;
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.5fr;
+      gap: 100px;
+      align-items: end;
+    }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #777;
+    }
+
+    .intro-title {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 6.5vw, 8rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+    }
+
+    .intro-title .word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: top;
+    }
+
+    .intro-title .word span {
+      display: block;
+      transform: translateY(105%);
+    }
+
+    .intro-copy {
+      max-width: 480px;
+      margin-top: 60px;
+      color: #555;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* =========================================================
+       SERVICES
+       ========================================================= */
+
+    .services {
+      background: var(--dark);
+      padding: 160px 0;
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 90px;
+    }
+
+    .services-heading {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 7vw, 8rem);
+      line-height: 0.85;
+      letter-spacing: -0.08em;
+    }
+
+    .services-heading span {
+      color: var(--muted);
+    }
+
+    .service-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .service {
+      position: relative;
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr;
+      gap: 30px;
+      padding: 45px 0;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      transition: padding 0.5s ease;
+    }
+
+    .service:hover {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+
+    .service-number {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .service-name {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2rem, 4vw, 5rem);
+      letter-spacing: -0.06em;
+      line-height: 1;
+    }
+
+    .service-description {
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.6;
+      font-size: 14px;
+      justify-self: end;
+    }
+
+    /* =========================================================
+       TRANSFORMATION SECTION
+       ========================================================= */
+
+    .transformation {
+      height: 300vh;
+      position: relative;
+      background: #171717;
+    }
+
+    .transformation-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .transform-image-wrap {
+      position: absolute;
+      width: 55vw;
+      height: 72vh;
+      right: 7vw;
+      overflow: hidden;
+    }
+
+    .transform-image {
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      transform: scale(1.2);
+    }
+
+    .transform-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(0,0,0,0.7),
+        rgba(0,0,0,0.05)
+      );
+    }
+
+    .transform-content {
+      position: relative;
+      z-index: 2;
+      width: min(calc(100% - 80px), var(--max-width));
+      margin: auto;
+    }
+
+    .transform-kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      margin-bottom: 30px;
+    }
+
+    .transform-title {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(4rem, 9vw, 10rem);
+      letter-spacing: -0.09em;
+      line-height: 0.82;
+      max-width: 850px;
+    }
+
+    .transform-title span {
+      display: block;
+    }
+
+    .transform-word {
+      color: var(--muted);
+    }
+
+    .transform-copy {
+      max-width: 360px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-top: 50px;
+      font-size: 14px;
+    }
+
+    .transform-progress {
+      position: absolute;
+      z-index: 5;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(400px, 70%);
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .transform-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: white;
+    }
+
+    /* =========================================================
+       STATS
+       ========================================================= */
+
+    .stats {
+      background: var(--white);
+      color: var(--black);
+      padding: 150px 0;
+    }
+
+    .stats-title {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 7vw, 8rem);
+      line-height: 0.85;
+      letter-spacing: -0.08em;
+      max-width: 900px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 130px;
+      border-top: 1px solid #ccc;
+    }
+
+    .stat {
+      padding: 45px 25px 20px 0;
+      border-right: 1px solid #ccc;
+    }
+
+    .stat:not(:first-child) {
+      padding-left: 30px;
+    }
+
+    .stat:last-child {
+      border-right: 0;
+    }
+
+    .stat-number {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 6vw, 7rem);
+      line-height: 1;
+      letter-spacing: -0.08em;
+    }
+
+    .stat-label {
+      margin-top: 15px;
+      color: #777;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* =========================================================
+       PROJECTS
+       ========================================================= */
+
+    .projects {
+      background: var(--black);
+      padding: 150px 0 120px;
+      overflow: hidden;
+    }
+
+    .projects-heading {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(4rem, 9vw, 10rem);
+      letter-spacing: -0.09em;
+      line-height: 0.8;
+      margin-bottom: 90px;
+    }
+
+    .project-track {
+      display: flex;
+      width: max-content;
+      gap: 25px;
+    }
+
+    .project {
+      width: min(48vw, 700px);
+      flex-shrink: 0;
+    }
+
+    .project-image {
+      height: 65vh;
+      overflow: hidden;
+      background: #222;
+    }
+
+    .project-image img {
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .project:hover img {
+      transform: scale(1.05);
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 20px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .project-name {
+      color: var(--white);
+    }
+
+    /* =========================================================
+       PROCESS
+       ========================================================= */
+
+    .process {
+      background: #e8e5de;
+      color: var(--black);
+      padding: 160px 0;
+    }
+
+    .process-title {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3rem, 7vw, 8rem);
+      line-height: 0.85;
+      letter-spacing: -0.08em;
+      max-width: 900px;
+    }
+
+    .process-list {
+      margin-top: 120px;
+    }
+
+    .process-item {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr;
+      gap: 30px;
+      padding: 45px 0;
+      border-top: 1px solid #c8c5bd;
+    }
+
+    .process-num {
+      color: #888;
+      font-size: 12px;
+    }
+
+    .process-name {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2rem, 4vw, 4.5rem);
+      letter-spacing: -0.06em;
+      line-height: 0.9;
+    }
+
+    .process-text {
+      max-width: 400px;
+      color: #666;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       CONTACT
+       ========================================================= */
+
+    .contact {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      padding: 120px 0;
+    }
+
+    .contact-heading {
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(4rem, 10vw, 11rem);
+      line-height: 0.8;
+      letter-spacing: -0.1em;
+    }
+
+    .contact-heading span {
+      color: var(--muted);
+    }
+
+    .contact-bottom {
+      margin-top: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .contact-copy {
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: all 0.5s ease;
+    }
+
+    .cta:hover {
+      background: var(--white);
+      color: var(--black);
+      transform: scale(1.08);
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--line);
+      padding: 35px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* =========================================================
+       REVEAL ANIMATIONS
+       ========================================================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-80px);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .container,
+      .nav-inner,
+      .transform-content {
+        width: min(calc(100% - 40px), var(--max-width));
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+      }
+
+      .hero-content {
+        padding-bottom: 50px;
+      }
+
+      .hero-bottom {
+        display: block;
+      }
+
+      .scroll-indicator {
+        margin-top: 35px;
+      }
+
+      .intro {
+        padding: 110px 0;
+      }
+
+      .intro-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .intro-copy {
+        margin-top: 30px;
+      }
+
+      .services,
+      .projects,
+      .process {
+        padding: 110px 0;
+      }
+
+      .services-header {
+        display: block;
+        margin-bottom: 60px;
+      }
+
+      .service {
+        grid-template-columns: 45px 1fr;
+      }
+
+      .service-description {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .transformation {
+        height: 250vh;
+      }
+
+      .transform-image-wrap {
+        width: 82vw;
+        height: 55vh;
+        right: 5vw;
+        top: 25%;
+      }
+
+      .transform-content {
+        align-self: flex-start;
+        padding-top: 120px;
+      }
+
+      .transform-title {
+        font-size: clamp(3.5rem, 14vw, 7rem);
+      }
+
+      .transform-copy {
+        margin-top: 30px;
+      }
+
+      .stats {
+        padding: 110px 0;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        margin-top: 80px;
+      }
+
+      .stat,
+      .stat:not(:first-child) {
+        border-right: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 35px 0;
+      }
+
+      .stat:last-child {
+        border-bottom: 0;
+      }
+
+      .project {
+        width: 82vw;
+      }
+
+      .project-image {
+        height: 55vh;
+      }
+
+      .process-list {
+        margin-top: 70px;
+      }
+
+      .process-item {
+        grid-template-columns: 45px 1fr;
+      }
+
+      .process-text {
+        grid-column: 2;
+      }
+
+      .contact-bottom {
+        display: block;
+        margin-top: 70px;
+      }
+
+      .cta {
+        margin-top: 60px;
+        width: 150px;
+        height: 150px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .hero {
+        min-height: 620px;
+      }
+
+      .hero-title {
+        font-size: 20vw;
+      }
+
+      .hero-description {
+        font-size: 13px;
+      }
+
+      .service {
+        padding: 35px 0;
+      }
+
+      .transform-image-wrap {
+        width: 90vw;
+        right: 5vw;
+        height: 48vh;
+      }
+
+      .project-image {
+        height: 48vh;
+      }
+    }
+  </style>
+</head>
+
+<body class="loading">
+
+  <!-- =======================================================
+       NAVIGATION
+       ======================================================= -->
+
+  <nav class="nav">
+    <div class="nav-inner">
+
+      <a href="#top" class="logo">
+        IHGC
+        <small>IMAGE HOUSE GENERAL CONTRACTING</small>
+      </a>
+
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <button class="menu">Menu</button>
+
+    </div>
+  </nav>
+
+
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
+
+  <main id="top">
+
+    <section class="hero">
+
+      <div class="hero-media">
+
+        <!-- Replace this image with an IHGC project image -->
+        <img
+          class="hero-image"
+          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=90"
+          alt="Modern interior"
+        >
+
+      </div>
+
+      <div class="hero-content container">
+
+        <div class="eyebrow">
+          <span>IMAGE HOUSE GENERAL CONTRACTING</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span>BUILD.</span>
+          <span>REIMAGINE.</span>
+        </h1>
+
+        <div class="hero-bottom">
+
+          <p class="hero-description">
+            We repair, renovate, design and create spaces that bring
+            architecture, craftsmanship and modern living together.
+          </p>
+
+          <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            Scroll to explore
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INTRO
+         ===================================================== -->
+
+    <section class="intro" id="about">
+
+      <div class="container">
+
+        <div class="intro-grid">
+
+          <div>
+            <div class="section-label reveal">
+              01 / ABOUT IHGC
+            </div>
+          </div>
+
+          <div>
+
+            <h2 class="intro-title">
+              <span class="word"><span>WE</span></span>
+              <span class="word"><span>TURN</span></span>
+              <span class="word"><span>SPACE</span></span>
+              <span class="word"><span>INTO</span></span>
+              <span class="word"><span>EXPERIENCE.</span></span>
+            </h2>
+
+            <p class="intro-copy reveal">
+              IHGC brings together construction, renovation and interior
+              design to create spaces that feel considered from every angle.
+              From repairing what exists to creating something entirely new,
+              every project begins with understanding the space and ends with
+              transforming it.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SERVICES
+         ===================================================== -->
+
+    <section class="services" id="services">
+
+      <div class="container">
+
+        <div class="services-header">
+
+          <div class="section-label reveal">
+            02 / WHAT WE DO
+          </div>
+
+          <h2 class="services-heading">
+            BUILD<br>
+            <span>BETTER.</span>
+          </h2>
+
+        </div>
+
+        <div class="service-list">
+
+          <div class="service reveal">
+
+            <div class="service-number">01</div>
+
+            <h3 class="service-name">REPAIR</h3>
+
+            <p class="service-description">
+              Restore, repair and improve existing spaces with careful
+              attention to structure, detail and finish.
+            </p>
+
+          </div>
+
+          <div class="service reveal">
+
+            <div class="service-number">02</div>
+
+            <h3 class="service-name">RENOVATE</h3>
+
+            <p class="service-description">
+              Transform outdated environments into modern, functional
+              spaces designed around the way people live and work.
+            </p>
+
+          </div>
+
+          <div class="service reveal">
+
+            <div class="service-number">03</div>
+
+            <h3 class="service-name">DESIGN</h3>
+
+            <p class="service-description">
+              Develop thoughtful interiors where materials, proportions,
+              lighting and functionality work together.
+            </p>
+
+          </div>
+
+          <div class="service reveal">
+
+            <div class="service-number">04</div>
+
+            <h3 class="service-name">CREATE</h3>
+
+            <p class="service-description">
+              Take a vision from the first idea through construction and
+              into a finished space made to last.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SCROLL TRANSFORMATION
+         ===================================================== -->
+
+    <section class="transformation" id="transformation">
+
+      <div class="transformation-sticky">
+
+        <div class="transform-image-wrap">
+
+          <!-- Replace with a real before/after/project image -->
+          <img
+            class="transform-image"
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=90"
+            alt="IHGC modern interior transformation"
+          >
+
+          <div class="transform-overlay"></div>
+
+        </div>
+
+        <div class="transform-content">
+
+          <div class="transform-kicker">
+            03 / THE TRANSFORMATION
+          </div>
+
+          <h2 class="transform-title">
+            FROM<br>
+            <span class="transform-word">SPACE</span><br>
+            TO<br>
+            <span>PLACE.</span>
+          </h2>
+
+          <p class="transform-copy">
+            Every project is a transformation — from an empty shell,
+            an outdated room or an unfinished idea into a space with
+            character, purpose and life.
+          </p>
+
+        </div>
+
+        <div class="transform-progress">
+          <div class="transform-progress-bar"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATS
+         ===================================================== -->
+
+    <section class="stats">
+
+      <div class="container">
+
+        <div class="section-label reveal">
+          04 / THE IHGC STANDARD
+        </div>
+
+        <h2 class="stats-title reveal">
+          BUILT AROUND<br>
+          YOUR VISION.
+        </h2>
+
+        <div class="stats-grid">
+
+          <div class="stat reveal">
+            <div class="stat-number" data-number="100">0%</div>
+            <div class="stat-label">Attention to detail</div>
+          </div>
+
+          <div class="stat reveal">
+            <div class="stat-number" data-number="24">0/7</div>
+            <div class="stat-label">Commitment to your project</div>
+          </div>
+
+          <div class="stat reveal">
+            <div class="stat-number" data-number="1">0</div>
+            <div class="stat-label">Vision from concept to completion</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROJECTS
+         ===================================================== -->
+
+    <section class="projects" id="projects">
+
+      <div class="container">
+
+        <div class="section-label reveal">
+          05 / SELECTED WORK
+        </div>
+
+        <h2 class="projects-heading">
+          PROJECTS.
+        </h2>
+
+      </div>
+
+      <div class="project-track">
+
+        <article class="project">
+
+          <div class="project-image">
+            <img
+              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"
+              alt="Modern residential interior"
+            >
+          </div>
+
+          <div class="project-meta">
+            <span class="project-name">Modern Residence</span>
+            <span>Residential / Interior</span>
+          </div>
+
+        </article>
+
+
+        <article class="project">
+
+          <div class="project-image">
+            <img
+              src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=90"
+              alt="Luxury modern interior"
+            >
+          </div>
+
+          <div class="project-meta">
+            <span class="project-name">Contemporary Interior</span>
+            <span>Design / Renovation</span>
+          </div>
+
+        </article>
+
+
+        <article class="project">
+
+          <div class="project-image">
+            <img
+              src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=90"
+              alt="Architectural interior"
+            >
+          </div>
+
+          <div class="project-meta">
+            <span class="project-name">Architectural Space</span>
+            <span>Construction / Design</span>
+          </div>
+
+        </article>
+
+
+        <article class="project">
+
+          <div class="project-image">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=90"
+              alt="Modern home"
+            >
+          </div>
+
+          <div class="project-meta">
+            <span class="project-name">Modern Living</span>
+            <span>Build / Renovation</span>
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROCESS
+         ===================================================== -->
+
+    <section class="process" id="process">
+
+      <div class="container">
+
+        <div class="section-label reveal">
+          06 / OUR PROCESS
+        </div>
+
+        <h2 class="process-title reveal">
+          FROM IDEA<br>
+          TO REALITY.
+        </h2>
+
+        <div class="process-list">
+
+          <div class="process-item reveal">
+
+            <div class="process-num">01</div>
+
+            <h3 class="process-name">DISCOVER</h3>
+
+            <p class="process-text">
+              We understand your space, your needs and what you want
+              the finished environment to feel like.
+            </p>
+
+          </div>
+
+          <div class="process-item reveal">
+
+            <div class="process-num">02</div>
+
+            <h3 class="process-name">DESIGN</h3>
+
+            <p class="process-text">
+              Ideas become plans. Materials, finishes, layouts and
+              details come together into a clear direction.
+            </p>
+
+          </div>
+
+          <div class="process-item reveal">
+
+            <div class="process-num">03</div>
+
+            <h3 class="process-name">BUILD</h3>
+
+            <p class="process-text">
+              Our construction process turns the design into something
+              tangible through craftsmanship and careful execution.
+            </p>
+
+          </div>
+
+          <div class="process-item reveal">
+
+            <div class="process-num">04</div>
+
+            <h3 class="process-name">TRANSFORM</h3>
+
+            <p class="process-text">
+              The final result is more than construction — it is a
+              space designed around how you live, work and experience it.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTACT
+         ===================================================== -->
+
+    <section class="contact" id="contact">
+
+      <div class="container">
+
+        <div class="section-label reveal">
+          07 / START A PROJECT
+        </div>
+
+        <h2 class="contact-heading reveal">
+          LET'S<br>
+          <span>BUILD</span><br>
+          SOMETHING.
+        </h2>
+
+        <div class="contact-bottom">
+
+          <p class="contact-copy">
+            Have a space that needs to be repaired, renovated or
+            completely reimagined? Let's talk about what we can create.
+          </p>
+
+          <a class="cta" href="mailto:info@ihgc.net">
+            Start a<br>Project ↗
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-inner">
+
+        <span>© 2026 IHGC</span>
+
+        <span>Image House General Contracting</span>
+
+        <a href="https://ihgc.net" target="_blank">
+          IHGC.NET
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================================
+       JAVASCRIPT / GSAP ANIMATIONS
+       ======================================================= -->
+
+  <script>
+
+    gsap.registerPlugin(ScrollTrigger);
+
+
+    /* =======================================================
+       LOADER
+       ======================================================= */
+
+    const loader = document.querySelector(".loader");
+
+    // Create loader dynamically
+    const loaderHTML = `
+      <div class="loader">
+        <div class="loader-inner">
+          <div class="loader-name">IHGC</div>
+          <div class="loader-line">
+            <div class="loader-progress"></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML("afterbegin", loaderHTML);
+
+    const loaderElement = document.querySelector(".loader");
+
+    const loadTimeline = gsap.timeline({
+      onComplete: () => {
+        document.body.classList.remove("loading");
+      }
+    });
+
+    loadTimeline
+      .to(".loader-name", {
+        y: "0%",
+        duration: 0.9,
+        ease: "power4.out"
+      })
+      .to(".loader-progress", {
+        width: "100%",
+        duration: 1.2,
+        ease: "power2.inOut"
+      })
+      .to(loaderElement, {
+        yPercent: -100,
+        duration: 1,
+        ease: "power4.inOut"
+      })
+      .from(".hero-title span", {
+        y: "110%",
+        duration: 1.2,
+        stagger: 0.12,
+        ease: "power4.out"
+      }, "-=0.45")
+      .to(".eyebrow span", {
+        y: "0%",
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.8");
+
+
+    /* =======================================================
+       HERO PARALLAX
+       ======================================================= */
+
+    gsap.to(".hero-image", {
+      yPercent: -10,
+      scale: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+
+    /* =======================================================
+       HERO TITLE EXIT
+       ======================================================= */
+
+    gsap.to(".hero-title", {
+      yPercent: -35,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "20% top",
+        end: "100% top",
+        scrub: true
+      }
+    });
+
+
+    /* =======================================================
+       INTRO TEXT REVEAL
+       ======================================================= */
+
+    gsap.utils.toArray(".intro-title .word span").forEach((word, index) => {
+
+      gsap.to(word, {
+        y: "0%",
+        duration: 1,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: word,
+          start: "top 85%"
+        }
+      });
+
+    });
+
+
+    /* =======================================================
+       GENERIC REVEALS
+       ======================================================= */
+
+    gsap.utils.toArray(".reveal").forEach((element) => {
+
+      gsap.to(element, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: element,
+          start: "top 88%",
+          once: true
+        }
+      });
+
+    });
+
+
+    gsap.utils.toArray(".reveal-left").forEach((element) => {
+
+      gsap.to(element, {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: element,
+          start: "top 88%",
+          once: true
+        }
+      });
+
+    });
+
+
+    /* =======================================================
+       TRANSFORMATION SECTION
+       ======================================================= */
+
+    const transformationTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".transformation",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        pin: false,
+        onUpdate: self => {
+
+          document.querySelector(".transform-progress-bar").style.width =
+            `${self.progress * 100}%`;
+
+        }
+      }
+    });
+
+    transformationTimeline
+
+      .to(".transform-image-wrap", {
+        width: "80vw",
+        height: "100vh",
+        right: "0",
+        duration: 1,
+        ease: "none"
+      })
+
+      .to(".transform-image", {
+        scale: 1,
+        yPercent: -8,
+        duration: 1,
+        ease: "none"
+      }, "<")
+
+      .to(".transform-title", {
+        xPercent: -20,
+        opacity: 0.15,
+        duration: 1,
+        ease: "none"
+      }, "<")
+
+      .to(".transform-overlay", {
+        opacity: 0.2,
+        duration: 1,
+        ease: "none"
+      }, "<");
+
+
+    /* =======================================================
+       STATS COUNTERS
+       ======================================================= */
+
+    document.querySelectorAll(".stat-number").forEach((counter) => {
+
+      const target = parseInt(counter.dataset.number);
+
+      const obj = { value: 0 };
+
+      gsap.to(obj, {
+
+        value: target,
+
+        duration: 2,
+
+        ease: "power2.out",
+
+        scrollTrigger: {
+          trigger: counter,
+          start: "top 85%",
+          once: true
+        },
+
+        onUpdate: () => {
+
+          const value = Math.round(obj.value);
+
+          if (target === 100) {
+            counter.textContent = `${value}%`;
+          }
+
+          else if (target === 24) {
+            counter.textContent = `${value}/7`;
+          }
+
+          else {
+            counter.textContent = `${value}`;
+          }
+
+        }
+
+      });
+
+    });
+
+
+    /* =======================================================
+       HORIZONTAL PROJECT SCROLL
+       ======================================================= */
+
+    const projectTrack = document.querySelector(".project-track");
+
+    function horizontalProjects() {
+
+      if (window.innerWidth > 900) {
+
+        const distance =
+          projectTrack.scrollWidth - window.innerWidth + 100;
+
+        gsap.to(projectTrack, {
+
+          x: -distance,
+
+          ease: "none",
+
+          scrollTrigger: {
+
+            trigger: ".projects",
+
+            start: "top top",
+
+            end: () => `+=${distance}`,
+
+            scrub: 1,
+
+            pin: true,
+
+            anticipatePin: 1
+
+          }
+
+        });
+
+      }
+
+    }
+
+    horizontalProjects();
+
+
+    /* =======================================================
+       PROCESS ITEMS
+       ======================================================= */
+
+    gsap.utils.toArray(".process-item").forEach((item, index) => {
+
+      gsap.fromTo(item,
+
+        {
+          opacity: 0,
+          x: index % 2 === 0 ? -60 : 60
+        },
+
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          ease: "power3.out",
+
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            once: true
+          }
+
+        }
+
+      );
+
+    });
+
+
+    /* =======================================================
+       CONTACT PARALLAX
+       ======================================================= */
+
+    gsap.fromTo(".contact-heading",
+
+      {
+        y: 80
+      },
+
+      {
+        y: -30,
+
+        ease: "none",
+
+        scrollTrigger: {
+          trigger: ".contact",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+
+      }
+
+    );
+
+
+    /* =======================================================
+       NAVIGATION COLOR / VISIBILITY
+       ======================================================= */
+
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll && currentScroll > 100) {
+
+        gsap.to(".nav", {
+          y: -100,
+          duration: 0.35,
+          ease: "power2.out"
+        });
+
+      } else {
+
+        gsap.to(".nav", {
+          y: 0,
+          duration: 0.35,
+          ease: "power2.out"
+        });
+
+      }
+
+      lastScroll = currentScroll;
+
+    });
+
+
+    /* =======================================================
+       MOBILE MENU
+       ======================================================= */
+
+    const menuButton = document.querySelector(".menu");
+
+    menuButton.addEventListener("click", () => {
+
+      alert(
+        "Mobile navigation can be expanded into a full-screen menu."
+      );
+
+    });
+
+
+    /* =======================================================
+       RESIZE
+       ======================================================= */
+
+    window.addEventListener("resize", () => {
+
+      ScrollTrigger.refresh();
+
+    });
+
+  </script>
+
+</body>
+</html>
